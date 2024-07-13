@@ -2,8 +2,8 @@ import express from "express";
 import { AuthControllers } from "./auth.controller";
 import validateRequest from "../../middlewares/validateRequest";
 import { AuthValidation } from "./auth.validation";
-import auth from "../../middlewares/auth";
-import { USER_ROLE } from "../user/user.constant";
+import { UserValidations } from "../User/user.validation";
+import { UserController } from "../User/user.controller";
 
 const router = express.Router();
 
@@ -14,16 +14,9 @@ router.post(
 );
 
 router.post(
-    "/change-password",
-    auth(USER_ROLE.admin, USER_ROLE.faculty, USER_ROLE.student),
-    validateRequest(AuthValidation.changePasswordValidationSchema),
-    AuthControllers.changePassword
-);
-
-router.post(
-    "/refresh-token",
-    validateRequest(AuthValidation.refreshTokenValidationSchema),
-    AuthControllers.refreshToken
+    "/signup",
+    validateRequest(UserValidations.createUserValidationSchema),
+    UserController.createUser
 );
 
 export const AuthRoutes = router;
