@@ -43,7 +43,7 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.post("save", function (doc, next) {
-    doc.password = "";
+    doc.set("password", undefined);
     next();
 });
 

@@ -24,6 +24,8 @@ const createUserIntoDB = async (payload: TUser) => {
 
         await session.commitTransaction();
         await session.endSession();
+
+        return newUser;
     } catch (error: any) {
         await session.abortTransaction();
         await session.endSession();

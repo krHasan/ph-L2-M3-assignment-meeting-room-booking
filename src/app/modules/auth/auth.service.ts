@@ -29,6 +29,7 @@ const loginUser = async (payload: TLoginUser) => {
 
     return {
         accessToken,
+        user: await User.findOne({ email: user.email }),
     };
 };
 

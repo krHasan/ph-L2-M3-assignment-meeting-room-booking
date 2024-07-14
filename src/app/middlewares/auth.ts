@@ -10,15 +10,17 @@ import { User } from "../modules/User/user.model";
 const auth = (...requiredRoles: TUserRole[]) => {
     return catchAsync(
         async (req: Request, res: Response, next: NextFunction) => {
-            const token = req.headers.authorization;
+            const tokenWithBearer = req.headers.authorization;
 
             //if the token is sent from the client
-            if (!token) {
+            if (!tokenWithBearer) {
                 throw new AppError(
                     httpStatus.UNAUTHORIZED,
                     "You are not authorized"
                 );
             }
+
+            const token = tokenWithBearer.split(" ")[1];
 
             //check if the token is valid
             const decoded = jwt.verify(
